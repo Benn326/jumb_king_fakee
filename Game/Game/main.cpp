@@ -4,7 +4,7 @@
 #include "Utils.h"
 #include "Game.h"
 #include <SDL_image.h>
-int main(int argc, char* argv[]) {
+int SDL_main(int argc, char* argv[]) {
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
 

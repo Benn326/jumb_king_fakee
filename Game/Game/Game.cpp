@@ -3,6 +3,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
+#include "Utils.h"
 
 
 Game::Game() : isRunning(false), window(nullptr), renderer(nullptr) ,facing(0) {
@@ -42,7 +43,7 @@ bool Game::init() {
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) return false;
-    SDL_Surface* tempSurface = IMG_Load("assets/player.png");
+    SDL_Surface* tempSurface = IMG_Load("C:/Users/LAPTOP/OneDrive - vnu.edu.vn/Desktop/Game/Game/assets/player.png");
     if (!tempSurface) {
         std::cout << "Failed to load player image: " << IMG_GetError() << std::endl;
         return false;

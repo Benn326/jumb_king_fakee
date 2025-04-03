@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <vector>
 #include "platform.h"
+#include "Utils.h"
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
