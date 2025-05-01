@@ -84,9 +84,11 @@ void GameMap::LoadTile(SDL_Renderer* renderer)
 
 void GameMap::Drawmap(SDL_Renderer* renderer)
 {
+    // Thêm offset ?? fix l?i hi?n th?
+    const int y_offset = game_map.start_y % TILE_SIZE;
 
+    int y = -y_offset; // Offset ?? c?n ch?nh chính xác tile
     int x = 0;
-    int y = 0;
 
     int map_y1 = game_map.start_y / TILE_SIZE;
     int map_y2 = (game_map.start_y + SCREEN_HEIGHT) / TILE_SIZE;

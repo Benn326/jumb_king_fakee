@@ -1,4 +1,4 @@
-#include<iostream>
+﻿#include<iostream>
 #include<SDL.h>
 #include<SDL_image.h>
 #include<SDL_mixer.h>
@@ -214,8 +214,8 @@ int main(int argc, char* argv[])
             }
             else background.Render(renderer, NULL);
 
-            if (map_data.start_y < 640)
-            {
+            if (map_data.start_y < 640) {
+                princess.SetMap_y(map_data.start_y); // Truyền giá trị camera
                 princess.Show(renderer);
             }
 

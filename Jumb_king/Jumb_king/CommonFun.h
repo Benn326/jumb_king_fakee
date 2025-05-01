@@ -25,15 +25,14 @@ const int COLOR_KEY_G = 175;
 const int COLOR_KEY_B = 180;
 
 
-const int MIN_JUMP_VAL = 5;
-const int MAX_JUMP_VAL = 10;
-const float MAX_FALLING_VAL = 10;
-const int MAX_JUMP_TIME = 30;
-const int JUMP_VELX = 10;
 
-const int GRAVITY = 1;
-
-
+// Physics
+constexpr float GRAVITY = 0.8f;
+constexpr float MAX_FALLING_VAL = 8.0f;
+constexpr float MIN_JUMP_VAL = 3.0f;
+constexpr float MAX_JUMP_VAL = 13.5f;
+constexpr float JUMP_VELX = 7.8f;
+constexpr int MAX_JUMP_TIME = 74;
 
 
 

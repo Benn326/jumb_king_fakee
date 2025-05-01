@@ -258,12 +258,12 @@ void King::Do_Player(Map& map_data)
 
     if (input_type.left)
     {
-        x_val -= 5;
+        x_val -= 2;
     }
 
     else if (input_type.right)
     {
-        x_val += 5;
+        x_val += 2;
     }
     else if (input_type.forcing)
     {
@@ -330,17 +330,26 @@ void King::Do_Player(Map& map_data)
 }
 
 
-void King::SetCamera(Map& map_data)
-{
-    if (y_pos + 1 > map_data.start_y + SCREEN_HEIGHT)
-    {
-        map_data.start_y += SCREEN_HEIGHT;
+void King::SetCamera(Map& map_data) {
+    const int centerY = y_pos + HeightFrame / 2;
+    const int screenCenter = SCREEN_HEIGHT / 2;
+
+    // Tính toán vị trí camera mới
+    int new_start_y = map_data.start_y;
+
+    if (centerY > map_data.start_y + SCREEN_HEIGHT - SCREEN_HEIGHT / 4) {
+        new_start_y = centerY - SCREEN_HEIGHT * 3 / 4;
+    }
+    else if (centerY < map_data.start_y + SCREEN_HEIGHT / 4) {
+        new_start_y = centerY - SCREEN_HEIGHT / 4;
     }
 
-    else if (y_pos + 1 < map_data.start_y)
-    {
-        map_data.start_y -= SCREEN_HEIGHT;
-    }
+    // Giới hạn thủ công
+    if (new_start_y < 0) new_start_y = 0;
+    if (new_start_y > map_data.max_y - SCREEN_HEIGHT)
+        new_start_y = map_data.max_y - SCREEN_HEIGHT;
+
+    map_data.start_y = new_start_y;
 }
 
 void King::Check_map(Map& map_data)
@@ -465,11 +474,13 @@ class Princess : public BaseObject
 public:
     Princess();
     //~King();
-
+    void SetMap_y(int map_y);
     void set_clip();
     void Show(SDL_Renderer* des);
 private:
-
+    int x_pos;  // Thêm
+    int y_pos;  // Thêm
+    int map_y;  // Thêm
     int HeightFrame;
     int WidthFrame;
     int frame = 0;
@@ -481,12 +492,16 @@ Princess::Princess()
 
     HeightFrame = 64;
     WidthFrame = 64;
-
+    x_pos = 576;  // Khởi tạo vị trí cố định
+    y_pos = 256;
+    map_y = 0;
 
     frame = 0;
 
 }
-
+void Princess::SetMap_y(int map_y) {
+    this->map_y = map_y;  // Nhận giá trị camera từ Map
+}
 
 void Princess::set_clip()
 {
@@ -500,31 +515,18 @@ void Princess::set_clip()
 
 }
 
-void Princess::Show(SDL_Renderer* renderer)
-{
+void Princess::Show(SDL_Renderer* renderer) {
     LoadImage("img//Princess.png", renderer);
 
-
-
-
-    if (frame / 12 >= 8)
-    {
-        frame = 0;
-    }
-
+    // Cập nhật animation
+    if (frame / 12 >= 8) frame = 0;
     frame++;
 
-
-
-
-    rect.x = 576;
-    rect.y = 256;
+    // Tính toán vị trí render DỰA TRÊN CAMERA
+    rect.x = x_pos;
+    rect.y = y_pos - map_y; // Quan trọng: trừ đi map_y
 
     SDL_Rect* current_clip = &frame_clip[frame / 12];
-
     SDL_Rect renderQuad = { rect.x, rect.y, WidthFrame, HeightFrame };
-
     SDL_RenderCopy(renderer, p_object, current_clip, &renderQuad);
-
-
 }
